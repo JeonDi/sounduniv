@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+{{ music.album.name }}
+{% endblock %}
+{% block content %}
+  <article>
+    <h1><b>Альбом - {{ album.name }} </b></h1>
+    <p>{{ album.description }}<p>
+    {% for music in page_obj %}
+  <article class="mb-5">
+    {% include "includes/music_card.html" %}
+  </article>
+{% endfor %}
+  </article>
+{% endblock %}

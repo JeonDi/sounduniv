@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+{{ music.name }}
+{% endblock %}
+{% block content %}
+  <article>
+    <h5 class="card-title"><b>{{ music.name }}</b></h5>
+      {% if music.album.image %}
+        <a href="{{ music.album.image.url }}" target="_blank">
+          <img class="img-thumbnail" style="width: 127px; float:left; margin: 0px 50px 7px 0;" src="{{ music.album.image.url }}">
+        </a>
+        {% endif %}
+    <ul>
+          <li>Исполнитель: {% include "includes/performer_link.html" %}</li>
+          <li>Альбом: {% include "includes/album_link.html" %}</li>
+          <li>Жанр: {% include "includes/genre_link.html" %}</li>
+          <li>Год выпуска: {{ music.album.year }}</li>
+          <li>Продолжительность: {{ music.duration }}</li>
+        </ul>
+      {% if user.is_authenticated %}
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+              <a class="btn btn-outline-primary" href="{% url 'pages:download' %}">
+          Скачать
+        </a>
+        <form action="{% url 'blog:add_like' music.id %}" method="post">
+          {% csrf_token %}
+          <button class="btn btn-outline-primary" type="submit">Мне нравится</button>
+          <span>Лайков: {{ music.musiclike_set.count }}</span>
+        </form>
+            </div>
+          {% else %}
+        <a class="btn btn-outline-primary" href="{% url 'blog:music_detail' music.id %}">
+          Слушать
+        </a>
+          {% endif %}
+  </article>
+{% endblock %}

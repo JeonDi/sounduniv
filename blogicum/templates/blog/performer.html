@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+{{ music.performer.name }}
+{% endblock %}
+{% block content %}
+  <article>
+    <h1><b>Страница исполнителя - {{ performer.name }} </b></h1>
+    <p>{{ performer.description }}<p>
+    {% for music in page_obj %}
+  <article class="mb-5">
+    {% include "includes/music_card.html" %}
+  </article>
+{% endfor %}
+  </article>
+{% endblock %}
